@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <!--<?= Html::a('Create Realisasi Keg', ['create'], ['class' => 'btn btn-success']) ?>-->
     </p>
+    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -33,10 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'Tolak_Ukur',
             'Target_Angka',
             'Target_Uraian',
-            'Real_Keu',
-            'Real_Fisik',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
         ],
     ]); ?>
 </div>

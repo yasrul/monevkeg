@@ -23,7 +23,7 @@ class RealisasiKegSearch extends RealisasiKeg
         return [
             [['id', 'Tahun', 'Kd_Urusan', 'Kd_Bidang', 'Kd_Unit', 'Kd_Sub', 'Kd_Prog', 'ID_Prog', 'Kd_Keg', 'Kd_Indikator', 'No_ID'], 'integer'],
             [['Tolak_Ukur', 'Target_Uraian', 'program', 'kegiatan'], 'safe'],
-            [['Target_Angka', 'Real_Keu', 'Real_Fisik'], 'number'],
+            [['Target_Angka'], 'number'],
         ];
     }
 
@@ -75,8 +75,6 @@ class RealisasiKegSearch extends RealisasiKeg
             'Kd_Indikator' => $this->Kd_Indikator,
             'No_ID' => $this->No_ID,
             'Target_Angka' => $this->Target_Angka,
-            'Real_Keu' => $this->Real_Keu,
-            'Real_Fisik' => $this->Real_Fisik,
         ]);
 
         $query->andFilterWhere(['like', 'Tolak_Ukur', $this->Tolak_Ukur])

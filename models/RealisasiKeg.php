@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Realisasi;
+use app\models\Monev;
 
 /**
  * This is the model class for table "indikator".
@@ -21,8 +23,6 @@ use Yii;
  * @property string $Tolak_Ukur
  * @property string $Target_Angka
  * @property string $Target_Uraian
- * @property string $Real_Keu
- * @property string $Real_Fisik
  */
 class RealisasiKeg extends \yii\db\ActiveRecord
 {
@@ -42,7 +42,7 @@ class RealisasiKeg extends \yii\db\ActiveRecord
         return [
             [['Tahun', 'Kd_Urusan', 'Kd_Bidang', 'Kd_Unit', 'Kd_Sub', 'Kd_Prog', 'ID_Prog', 'Kd_Keg', 'Kd_Indikator', 'No_ID'], 'required'],
             [['Tahun', 'Kd_Urusan', 'Kd_Bidang', 'Kd_Unit', 'Kd_Sub', 'Kd_Prog', 'ID_Prog', 'Kd_Keg', 'Kd_Indikator', 'No_ID'], 'integer'],
-            [['Target_Angka', 'Real_Keu', 'Real_Fisik'], 'number'],
+            [['Target_Angka'], 'number'],
             [['Tolak_Ukur', 'Target_Uraian'], 'string', 'max' => 255],
         ];
     }
@@ -67,8 +67,6 @@ class RealisasiKeg extends \yii\db\ActiveRecord
             'Tolak_Ukur' => 'Tolak  Ukur',
             'Target_Angka' => 'Target  Angka',
             'Target_Uraian' => 'Target  Uraian',
-            'Real_Keu' => 'Real  Keu',
-            'Real_Fisik' => 'Real  Fisik',
         ];
     }
     
@@ -93,5 +91,13 @@ class RealisasiKeg extends \yii\db\ActiveRecord
             'Kd_Prog' => 'Kd_Prog',
             'Kd_Keg' => 'Kd_Keg',
         ]);
+    }
+    
+    public function getRealisasi() {
+        return $this->hasMany(Realisasi::className(), ['id_indikator' => 'id']);
+    }
+    
+    public function getMonev() {
+        return $this->hasMany(Monev::className(), ['id_indikator' => 'id']);
     }
 }

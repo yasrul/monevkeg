@@ -43,10 +43,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'Target_Uraian') ?>
 
-    <?php // echo $form->field($model, 'Real_Keu') ?>
-
-    <?php // echo $form->field($model, 'Real_Fisik') ?>
-
+   
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\RealisasiKeg */
@@ -14,17 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -34,17 +24,52 @@ $this->params['breadcrumbs'][] = $this->title;
             'Kd_Bidang',
             'Kd_Unit',
             'Kd_Sub',
-            'Kd_Prog',
-            'ID_Prog',
-            'Kd_Keg',
-            'Kd_Indikator',
-            'No_ID',
+            ['label' => 'Program', 'value' => $model->program->Ket_Program],
+            //'ID_Prog',
+            ['label' => 'Kegiatan', 'value' => $model->kegiatan->Ket_Kegiatan],
+            //'Kd_Indikator',
+            //'No_ID',
             'Tolak_Ukur',
             'Target_Angka',
             'Target_Uraian',
-            'Real_Keu',
-            'Real_Fisik',
+            
         ],
+    ]) ?>
+    
+    <h2>Realisasi</h2>
+    <p>
+        <?= Html::a('Entry Realisasi', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    </p>
+    
+    <?= GridView::widget([
+        'dataProvider' => new yii\data\ActiveDataProvider([
+            'query' => $model->getRealisasi(),
+            'pagination' => false,
+        ]),
+        'columns' => [
+            'tgl_entry',
+            'fisik',
+            'keuangan',
+        ]
+    ]) ?>
+    
+    <h2>Kinerja</h2>
+    <p>
+        <?= Html::a('Entry Kinerja', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    </p>
+    
+    <?= GridView::widget([
+        'dataProvider' => new yii\data\ActiveDataProvider([
+            'query' => $model->getMonev(),
+            'pagination' => false,
+        ]),
+        'columns' => [
+            'tgl_keg',
+            'kinerja',
+            'permasalahan',
+            'resume',
+            'rekomendasi'
+        ]
     ]) ?>
 
 </div>
