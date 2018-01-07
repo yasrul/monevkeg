@@ -70,6 +70,25 @@ class RealisasiKeg extends \yii\db\ActiveRecord
         ];
     }
     
+    public function getUrusan() {
+        return $this->hasOne(Urusan::className(), ['Kd_Urusan' => 'Kd_Urusan']);
+    }
+    
+    public function getBidang() {
+        return $this->hasOne(Bidang::className(), [
+            'Kd_Urusan' => 'Kd_Urusan',
+            'Kd_Bidang' => 'Kd_Bidang'
+        ]);
+    }
+    
+    public function getUnit() {
+        return $this->hasOne(Unit::className(), [
+            'Kd_Urusan' => 'Kd_Urusan',
+            'Kd_Bidang' => 'Kd_Bidang',
+            'Kd_Unit' => 'Kd_Unit',
+        ]);
+    }
+
     public function getProgram() {
         return $this->hasOne(Program::className(), [
             'Tahun'=>'Tahun',

@@ -11,7 +11,7 @@ use Yii;
  * @property integer $id_indikator
  * @property string $tgl_keg
  * @property string $kinerja
- * @property string $pemasalahan
+ * @property string $permasalahan
  * @property string $resume
  * @property string $rekomendasi
  */
@@ -34,7 +34,7 @@ class Monev extends \yii\db\ActiveRecord
             [['id_indikator', 'kinerja'], 'required'],
             [['id_indikator'], 'integer'],
             [['tgl_keg'], 'safe'],
-            [['kinerja', 'pemasalahan', 'resume', 'rekomendasi'], 'string', 'max' => 500],
+            [['kinerja', 'permasalahan', 'resume', 'rekomendasi'], 'string', 'max' => 500],
         ];
     }
 
@@ -48,7 +48,7 @@ class Monev extends \yii\db\ActiveRecord
             'id_indikator' => 'Id Indikator',
             'tgl_keg' => 'Tgl Keg',
             'kinerja' => 'Kinerja',
-            'pemasalahan' => 'Pemasalahan',
+            'permasalahan' => 'Permasalahan',
             'resume' => 'Resume',
             'rekomendasi' => 'Rekomendasi',
         ];

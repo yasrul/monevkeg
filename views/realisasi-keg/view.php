@@ -20,9 +20,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'Tahun',
-            'Kd_Urusan',
-            'Kd_Bidang',
-            'Kd_Unit',
+            //'Kd_Urusan',
+            ['label' => 'Urusan', 'value' => $model->urusan->Nm_Urusan],
+            //'Kd_Bidang',
+            ['label' => 'Bidang', 'value' => $model->bidang->Nm_Bidang],
+            //'Kd_Unit',
+            ['label' => 'Unit', 'value' => $model->unit->Nm_Unit],
             'Kd_Sub',
             ['label' => 'Program', 'value' => $model->program->Ket_Program],
             //'ID_Prog',
@@ -38,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <h2>Realisasi</h2>
     <p>
-        <?= Html::a('Entry Realisasi', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Entry Realisasi', ['realisasi/create', 'idIndikator' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
     
     <?= GridView::widget([
@@ -46,8 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'query' => $model->getRealisasi(),
             'pagination' => false,
         ]),
+        'options' => ['style'=>'width:50%'],
         'columns' => [
-            'tgl_entry',
+            //'tgl_entry',
+            ['attribute'=>'tgl_entry', 'contentOptions'=>['style'=>'width:10%']],
             'fisik',
             'keuangan',
         ]
@@ -55,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <h2>Kinerja</h2>
     <p>
-        <?= Html::a('Entry Kinerja', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Entry Kinerja', ['monev/create', 'idIndikator' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
     
     <?= GridView::widget([
@@ -64,7 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'pagination' => false,
         ]),
         'columns' => [
-            'tgl_keg',
+            //'tgl_keg',
+            ['attribute'=>'tgl_keg', 'contentOptions'=>['style'=>'width:10%']],
             'kinerja',
             'permasalahan',
             'resume',
