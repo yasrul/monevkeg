@@ -71,16 +71,16 @@ class RealisasiKegSearch extends RealisasiKeg
             //'Kd_Sub' => $this->Kd_Sub,
             //'Kd_Prog' => $this->Kd_Prog,
             //'ID_Prog' => $this->ID_Prog,
-            'Kd_Keg' => $this->Kd_Keg,
+            //'Kd_Keg' => $this->Kd_Keg,
             'Kd_Indikator' => $this->Kd_Indikator,
             'No_ID' => $this->No_ID,
             'Target_Angka' => $this->Target_Angka,
         ]);
 
-        $query->andFilterWhere(['like', 'Tolak_Ukur', $this->Tolak_Ukur])
+        $query->andFilterWhere(['like', 'indikator.Tolak_Ukur', $this->Tolak_Ukur])
             ->andFilterWhere(['like', 'Target_Uraian', $this->Target_Uraian])
-            ->andFilterWhere(['like', 'program.Ket_Prog', $this->program])
-            ->andFilterWhere(['like', 'kegiatan.Ket_Keg', $this->kegiatan]);
+            ->andFilterWhere(['like', 'program.Ket_Program', $this->program])
+            ->andFilterWhere(['like', 'kegiatan.Ket_Kegiatan', $this->kegiatan]);
         
         return $dataProvider;
     }

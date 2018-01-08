@@ -37,6 +37,7 @@ use yii\widgets\Breadcrumbs;
 						    'items' => [
 						        ['label' => 'Home', 'url' => ['site/index']],
 						        ['label' => 'About', 'url' => ['site/about']],
+                                                        ['label' => 'Monev Kegiatan', 'url' => ['/realisasi-keg/index']],
 						        ['label' => 'Contact', 'url' => ['site/contact']],
 						        ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
 						    ],

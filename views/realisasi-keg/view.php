@@ -20,15 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'Tahun',
-            //'Kd_Urusan',
             ['label' => 'Urusan', 'value' => $model->urusan->Nm_Urusan],
-            //'Kd_Bidang',
             ['label' => 'Bidang', 'value' => $model->bidang->Nm_Bidang],
-            //'Kd_Unit',
             ['label' => 'Unit', 'value' => $model->unit->Nm_Unit],
             'Kd_Sub',
             ['label' => 'Program', 'value' => $model->program->Ket_Program],
-            //'ID_Prog',
             ['label' => 'Kegiatan', 'value' => $model->kegiatan->Ket_Kegiatan],
             //'Kd_Indikator',
             //'No_ID',
@@ -55,6 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute'=>'tgl_entry', 'contentOptions'=>['style'=>'width:10%']],
             'fisik',
             'keuangan',
+            
+            ['class' => 'yii\grid\ActionColumn', 
+                'template' => '{update} {delete}',
+                'controller' => 'realisasi',
+            ],
         ]
     ]) ?>
     
@@ -74,7 +75,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'kinerja',
             'permasalahan',
             'resume',
-            'rekomendasi'
+            'rekomendasi',
+            
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'controller' => 'monev',
+            ],
         ]
     ]) ?>
 

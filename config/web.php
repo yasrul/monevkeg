@@ -52,11 +52,15 @@ $config = [
                 '<controller:\w+\-\w+>/<id:\d+>' => '<controller>/view',
             ],
         ],
+        /*
         'view' => [
             'theme' => [
-                'pathMap' => ['@app/views' => '@app/themes/material-default'],
-            ],
-        ],
+                'pathMap' => ['@app/views' => 'themes/material-default'],
+                'baseUrl'   => '@web/themes/material-default'
+            ]
+        ]
+         * 
+         */
     ],
     'params' => $params,
 ];
