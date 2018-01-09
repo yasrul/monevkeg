@@ -1,0 +1,4 @@
+SELECT i.Kd_Prog, AVG(r.fisik), AVG(r.keuangan) FROM indikator i
+LEFT JOIN realisasi r ON i.id = r.id_indikator
+GROUP BY i.Kd_Prog
+ORDER BY i.Kd_Prog
