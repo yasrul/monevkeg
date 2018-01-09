@@ -2,3 +2,8 @@ SELECT i.Kd_Prog, AVG(r.fisik), AVG(r.keuangan) FROM indikator i
 LEFT JOIN realisasi r ON i.id = r.id_indikator
 GROUP BY i.Kd_Prog
 ORDER BY i.Kd_Prog
+
+SELECT i.Kd_Prog, (SUM(r.fisik) / COUNT(i.Kd_Prog)) AS rerata_fisik, (SUM(r.keuangan) / COUNT(i.Kd_Prog)) rerata_uang FROM indikator i
+LEFT JOIN (SELECT id_indikator, MAX(fisik) AS fisik, MAX(keuangan) AS keuangan FROM realisasi GROUP BY id_indikator) r ON i.id = r.id_indikator
+GROUP BY i.Kd_Prog
+ORDER BY i.Kd_Prog
