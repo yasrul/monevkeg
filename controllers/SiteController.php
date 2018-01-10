@@ -7,8 +7,12 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
+use yii\db\Query;
+
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\RealisasiKeg;
 
 class SiteController extends Controller
 {
@@ -61,7 +65,34 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $realProgs = (new Query())->select('p.Ket_Program AS Program, SUM(r.fisik)/COUNT(i.Kd_Prog) AS rerata_fisik, SUM(r.keuangan)/COUNT(i.Kd_Prog) rerata_uang')
+                ->from('indikator i')
+                ->leftJoin('(SELECT id_indikator, MAX(fisik) AS fisik, MAX(keuangan) AS keuangan FROM realisasi GROUP BY id_indikator) r ON i.id = r.id_indikator')
+                ->leftJoin('program p ON (i.Kd_Prog = p.Kd_Prog) AND (i.ID_Prog = p.ID_Prog)')
+                ->groupBy('i.Kd_Prog, i.ID_Prog')->orderBy('i.Kd_Prog, i.ID_Prog')
+                ->all();
+        
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $realProgs,
+        ]);
+        
+        $series = [];
+        $categories = [];
+        $fisik = [];
+        $uang = [];
+        foreach ($realProgs as $realProg) {
+            $categories[] = $realProg['Program'];
+            $fisik[] = round($realProg['rerata_fisik'], 2);
+            $uang[] = round($realProg['rerata_uang'],2);
+            
+        }
+        
+        $series = [
+                ['name' => 'Fisik', 'data' => $fisik],
+                ['name' => 'Uang', 'data' => $uang]
+        ];
+        
+        return $this->render('index', ['dataProvider' => $dataProvider, 'categories'=>$categories ,'series' => $series]);
     }
 
     /**
