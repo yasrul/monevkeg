@@ -14,6 +14,7 @@ class RealisasiKegSearch extends RealisasiKeg
 {
     public $program;
     public $kegiatan;
+    public $kode;
     
     /**
      * @inheritdoc
@@ -64,7 +65,7 @@ class RealisasiKegSearch extends RealisasiKeg
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'Tahun' => $this->Tahun,
+            'indikator.Tahun' => $this->Tahun,
             //'Kd_Urusan' => $this->Kd_Urusan,
             //'Kd_Bidang' => $this->Kd_Bidang,
             //'Kd_Unit' => $this->Kd_Unit,

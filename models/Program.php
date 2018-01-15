@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "program".
@@ -64,5 +65,11 @@ class Program extends \yii\db\ActiveRecord
             'Kd_Urusan1' => 'Kd  Urusan1',
             'Kd_Bidang1' => 'Kd  Bidang1',
         ];
+    }
+    
+    public static function listProgram() {
+        $Options = Program::find()->select(['concat(Kd_Prog,".",Id_Prog) As Kode','Ket_Program'])
+                ->groupBy(['Kd_Prog','Id_Prog'])->asArray()->all();
+        return ArrayHelper::map($Options, 'Kode', 'Ket_Program');
     }
 }

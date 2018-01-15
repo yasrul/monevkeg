@@ -7,6 +7,7 @@ use app\models\RealisasiKeg;
 use app\models\search\RealisasiKegSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\base\DynamicModel;
 use yii\filters\VerbFilter;
 
 use app\models\Monev;
@@ -37,6 +38,7 @@ class RealisasiKegController extends Controller
      */
     public function actionIndex()
     {
+        
         $searchModel = new RealisasiKegSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

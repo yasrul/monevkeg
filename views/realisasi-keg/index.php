@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
+use app\models\Program;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\RealisasiKegSearch */
@@ -18,6 +20,26 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <!--<?= Html::a('Create Realisasi Keg', ['create'], ['class' => 'btn btn-success']) ?>-->
     </p>
+    <div class="form">
+        <?php $form = ActiveForm::begin([
+            'action' => ['realisasi-keg/index'],
+            'method' => 'get'
+        ]); ?>
+        <?= $form->field($searchModel, 'Tahun')->dropDownList(['2017'=>'2017','2018'=>'2018'], [
+            'prompt' => '[Tahun Anggaran]',
+            'style' => 'width:200px'
+        ]) ?>
+        <?= $form->field($searchModel, 'kode')->dropDownList(Program::listProgram(),[
+            'prompt' =>'[Program]',
+            'style' => 'width:500px'
+        ]) ?>
+        
+        <div class="form-group">
+            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+        </div>
+        <?php ActiveForm::end(); ?>
+        
+    </div>
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'Tahun',
+            //'Tahun',
             ['attribute' => 'program', 'value' => 'program.Ket_Program'],
             ['attribute' => 'kegiatan', 'value' => 'kegiatan.Ket_Kegiatan'],
             // 'Kd_Indikator',
