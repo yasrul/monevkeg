@@ -97,6 +97,7 @@ class RealisasiKeg extends \yii\db\ActiveRecord
             'Kd_Unit' => 'Kd_Unit',
             'Kd_Sub' => 'Kd_Sub',
             'Kd_Prog' => 'Kd_Prog',
+            'ID_Prog' => 'ID_Prog'
         ]);
     }
     

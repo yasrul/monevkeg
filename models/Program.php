@@ -68,8 +68,8 @@ class Program extends \yii\db\ActiveRecord
     }
     
     public static function listProgram() {
-        $Options = Program::find()->select(['concat(Kd_Prog,".",Id_Prog) As Kode','Ket_Program'])
-                ->groupBy(['Kd_Prog','Id_Prog'])->asArray()->all();
-        return ArrayHelper::map($Options, 'Kode', 'Ket_Program');
+        $Options = Program::find()->select(['concat(Kd_Prog,".",ID_Prog) KdID_Prog','Ket_Program'])
+                ->groupBy(['Kd_Prog','ID_Prog'])->asArray()->all();
+        return ArrayHelper::map($Options, 'KdID_Prog', 'Ket_Program');
     }
 }

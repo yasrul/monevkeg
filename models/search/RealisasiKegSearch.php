@@ -14,7 +14,7 @@ class RealisasiKegSearch extends RealisasiKeg
 {
     public $program;
     public $kegiatan;
-    public $kode;
+    public $KdID_Prog;
     
     /**
      * @inheritdoc
@@ -23,7 +23,7 @@ class RealisasiKegSearch extends RealisasiKeg
     {
         return [
             [['id', 'Tahun', 'Kd_Urusan', 'Kd_Bidang', 'Kd_Unit', 'Kd_Sub', 'Kd_Prog', 'ID_Prog', 'Kd_Keg', 'Kd_Indikator', 'No_ID'], 'integer'],
-            [['Tolak_Ukur', 'Target_Uraian', 'program', 'kegiatan'], 'safe'],
+            [['Tolak_Ukur', 'Target_Uraian', 'program', 'kegiatan','KdID_Prog'], 'safe'],
             [['Target_Angka'], 'number'],
         ];
     }
@@ -55,6 +55,7 @@ class RealisasiKegSearch extends RealisasiKeg
         ]);
 
         $this->load($params);
+        $KdIDProg = explode(".", $this->KdID_Prog);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -70,8 +71,8 @@ class RealisasiKegSearch extends RealisasiKeg
             //'Kd_Bidang' => $this->Kd_Bidang,
             //'Kd_Unit' => $this->Kd_Unit,
             //'Kd_Sub' => $this->Kd_Sub,
-            //'Kd_Prog' => $this->Kd_Prog,
-            //'ID_Prog' => $this->ID_Prog,
+            'indikator.Kd_Prog' => isset($KdIDProg[0]) ? $KdIDProg[0] : "" ,
+            'indikator.ID_Prog' => isset($KdIDProg[1]) ? $KdIDProg[1] : "" ,
             //'Kd_Keg' => $this->Kd_Keg,
             'Kd_Indikator' => $this->Kd_Indikator,
             'No_ID' => $this->No_ID,

@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'prompt' => '[Tahun Anggaran]',
             'style' => 'width:200px'
         ]) ?>
-        <?= $form->field($searchModel, 'kode')->dropDownList(Program::listProgram(),[
+        <?= $form->field($searchModel, 'KdID_Prog')->dropDownList(Program::listProgram(),[
             'prompt' =>'[Program]',
             'style' => 'width:500px'
         ]) ?>
