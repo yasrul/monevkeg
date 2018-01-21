@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Monev */
@@ -11,7 +12,9 @@ use kartik\date\DatePicker;
 
 <div class="monev-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options'=>['enctype' => 'multipart/form-data'],
+    ]); ?>
 
     <!--<?= $form->field($model, 'id_indikator')->textInput() ?>-->
 
@@ -31,6 +34,17 @@ use kartik\date\DatePicker;
     <?= $form->field($model, 'resume')->textarea(['maxlength' => true, 'row'=>'3']) ?>
 
     <?= $form->field($model, 'rekomendasi')->textarea(['maxlength' => true, 'row'=>'3']) ?>
+    
+    <?= $form->field($model, 'filesup[]')->widget(FileInput::className(), [
+        'options' => ['multiple' => true],
+        'pluginOptions' => [
+            'allowedFileExtensions'=>['doc','docx','xls','xlsx','ppt','pptx','jpg','jpeg','png','pdf','zip','rar'], 
+            'showUpload'=>FALSE,
+            'showCaption'=>TRUE,
+            'showRemove'=>true,
+            'style' => 'width : 500px'
+        ]
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

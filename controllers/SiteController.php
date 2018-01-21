@@ -68,8 +68,8 @@ class SiteController extends Controller
         $realProgs = (new Query())->select('p.Ket_Program AS Program, SUM(r.fisik)/COUNT(i.Kd_Prog) AS rerata_fisik, SUM(r.keuangan)/COUNT(i.Kd_Prog) rerata_uang')
                 ->from('indikator i')
                 ->leftJoin('(SELECT id_indikator, MAX(fisik) AS fisik, MAX(keuangan) AS keuangan FROM realisasi GROUP BY id_indikator) r ON i.id = r.id_indikator')
-                ->leftJoin('program p ON (i.Kd_Prog = p.Kd_Prog) AND (i.ID_Prog = p.ID_Prog)')
-                ->groupBy('i.Kd_Prog, i.ID_Prog')->orderBy('i.Kd_Prog, i.ID_Prog')
+                ->leftJoin('program p ON (i.Kd_Prog = p.Kd_Prog)')
+                ->groupBy('i.Kd_Prog')->orderBy('i.Kd_Prog')
                 ->all();
         
         $dataProvider = new ArrayDataProvider([

@@ -498,7 +498,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-09-06 06:18:08"
+            "time": "2017-09-06T06:18:08+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
@@ -553,7 +553,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-12-06 12:34:31"
+            "time": "2017-12-06T12:34:31+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-select2",
@@ -606,7 +606,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-12-03 08:02:21"
+            "time": "2017-12-03T08:02:21+00:00"
         },
         {
             "name": "miloschuman/yii2-highcharts-widget",
@@ -655,7 +655,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-10-27 13:56:43"
+            "time": "2017-10-27T13:56:43+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

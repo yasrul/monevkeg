@@ -29,13 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'prompt' => '[Tahun Anggaran]',
             'style' => 'width:200px'
         ]) ?>
-        <?= $form->field($searchModel, 'KdID_Prog')->dropDownList(Program::listProgram(),[
+        <?= $form->field($searchModel, 'Kd_Prog')->dropDownList(Program::listProgram(),[
             'prompt' =>'[Program]',
             'style' => 'width:500px'
         ]) ?>
         
         <div class="form-group">
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Filter', ['class' => 'btn btn-primary']) ?>
         </div>
         <?php ActiveForm::end(); ?>
         
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             //'Tahun',
-            ['attribute' => 'program', 'value' => 'program.Ket_Program'],
+            //['attribute' => 'program', 'value' => 'program.Ket_Program'],
             ['attribute' => 'kegiatan', 'value' => 'kegiatan.Ket_Kegiatan'],
             // 'Kd_Indikator',
             // 'No_ID',
