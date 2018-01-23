@@ -8,6 +8,7 @@ use app\models\search\MonevSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * MonevController implements the CRUD actions for Monev model.
@@ -67,8 +68,19 @@ class MonevController extends Controller
         $model->id_indikator = $idIndikator;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->save();
-            return $this->redirect(['realisasi-keg/view', 'id' => $model->id_indikator]);
+            $model->filesup = UploadedFile::getInstances($model, 'filesup');
+            if ($model->filesup) {
+                foreach ($model->filesup as $fileup) {
+                        $model->doc_realfilename .= $fileup->name.'**';
+                        $sysfilename = $fileup->baseName.Yii::$app->security->generateRandomKey(4).$fileup->extension;
+                        $model->doc_sysfilename .= $sysfilename;
+                        $fileup->saveAs('/docfiles/'.$sysfilename);
+                }
+            }
+            if ($model->save()) {
+                return $this->redirect(['realisasi-keg/view', 'id' => $model->id_indikator]);
+            }
+            
         } else {
             return $this->render('create', [
                 'model' => $model,
