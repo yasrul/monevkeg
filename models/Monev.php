@@ -16,6 +16,7 @@ use Yii;
  * @property string $rekomendasi
  * @property string $doc_sysfilename
  * @property string $doc_realfilename
+ * @property string $dokumen
  */
 class Monev extends \yii\db\ActiveRecord
 {
@@ -38,9 +39,9 @@ class Monev extends \yii\db\ActiveRecord
             [['id_indikator', 'kinerja'], 'required'],
             [['id_indikator'], 'integer'],
             [['tgl_keg','filesup'], 'safe'],
-            [['kinerja', 'permasalahan', 'resume', 'rekomendasi', 'doc_sysfilename', 'doc_realfilename'], 'string', 'max' => 500],
+            [['kinerja', 'permasalahan', 'resume', 'rekomendasi', 'doc_sysfilename', 'doc_realfilename','dokumen'], 'string', 'max' => 500],
             [['filesup'], 'file', 'extensions' => ['doc','docx','xls','xlsx','ppt','pptx','jpg','jpeg','pdf','zip','rar'],
-                'maxSize' => 1024*1024,
+                'maxSize' => 10*1024*1024,
                 'maxFiles' => 5,
                 'skipOnEmpty' => TRUE,
             ]

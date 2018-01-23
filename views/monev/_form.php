@@ -35,6 +35,7 @@ use kartik\file\FileInput;
 
     <?= $form->field($model, 'rekomendasi')->textarea(['maxlength' => true, 'row'=>'3']) ?>
     
+    <?php if ($model->isNewRecord) : ?>
     <?= $form->field($model, 'filesup[]')->widget(FileInput::className(), [
         'options' => ['multiple' => true],
         'pluginOptions' => [
@@ -45,6 +46,22 @@ use kartik\file\FileInput;
             'style' => 'width : 500px'
         ]
     ]); ?>
+    <?php else : ?>
+    <?= $form->field($model, 'filesup[]')->widget(FileInput::className(), [
+        'options' => ['multiple' => true],
+        'pluginOptions' => [
+            'initialPreview' => [
+                Yii::$app->basePath.'/docfiles/'.'doDB.pdf'
+                
+            ],
+            'initialPreviewAsData'=>true,
+            'overwriteInitial'=>false,
+            'previewFileType' => '*/*',
+            'initialCaption'=> $model->dokumen,
+            
+        ]
+    ]); ?>
+    <?php endif ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

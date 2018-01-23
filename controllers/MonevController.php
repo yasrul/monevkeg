@@ -68,13 +68,19 @@ class MonevController extends Controller
         $model->id_indikator = $idIndikator;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->filesup = UploadedFile::getInstances($model, 'filesup');
-            if ($model->filesup) {
-                foreach ($model->filesup as $fileup) {
-                        $model->doc_realfilename .= $fileup->name.'**';
-                        $sysfilename = $fileup->baseName.Yii::$app->security->generateRandomKey(4).$fileup->extension;
-                        $model->doc_sysfilename .= $sysfilename;
-                        $fileup->saveAs('/docfiles/'.$sysfilename);
+            $filesup = UploadedFile::getInstances($model, 'filesup');
+            if ($filesup) {
+                foreach ($filesup as $fileup) {
+                    $filename = $fileup->name;
+                    $path = Yii::getAlias('@app/docfiles/').$filename;
+                    $count = 0;
+                    while (file_exists($path)) {
+                        $count++;
+                        $filename = $fileup->baseName.'_'.$count.'.'.$fileup->extension;
+                        $path = Yii::getAlias('@app/docfiles/').$filename;                      
+                    }
+                    $model->dokumen .= $filename.'//';
+                    $fileup->saveAs($path);
                 }
             }
             if ($model->save()) {

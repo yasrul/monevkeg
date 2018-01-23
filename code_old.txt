@@ -15,3 +15,30 @@ $realProgs = (new Query())->select('p.Ket_Program AS Program, SUM(r.fisik)/COUNT
                 ->leftJoin('program p ON (i.Kd_Prog = p.Kd_Prog) AND (i.ID_Prog = p.ID_Prog)')
                 ->groupBy('i.Kd_Prog, i.ID_Prog')->orderBy('i.Kd_Prog, i.ID_Prog')
                 ->all();
+
+public function actionCreate($idIndikator)
+    {
+        $model = new Monev();
+        $model->id_indikator = $idIndikator;
+
+        if ($model->load(Yii::$app->request->post())) {
+            $filesup = UploadedFile::getInstances($model, 'filesup');
+            if ($filesup) {
+                foreach ($filesup as $fileup) {
+                    
+                    $model->doc_realfilename .= $fileup->name.'//';
+                    $sysfilename = $fileup->baseName.Yii::$app->security->generateRandomString(4).'.'.$fileup->extension;
+                    $model->doc_sysfilename .= $sysfilename.'//';
+                    $fileup->saveAs(Yii::getAlias('@app/docfiles/').$sysfilename);
+                }
+            }
+            if ($model->save()) {
+                return $this->redirect(['realisasi-keg/view', 'id' => $model->id_indikator]);
+            }
+            
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
