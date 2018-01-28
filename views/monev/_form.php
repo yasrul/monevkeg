@@ -51,13 +51,12 @@ use kartik\file\FileInput;
         'options' => ['multiple' => true],
         'pluginOptions' => [
             'initialPreview' => [
-                Yii::$app->basePath.'/docfiles/'.'doDB.pdf'
+            Yii::$app->getUrlManager()->getBaseUrl().'/docfiles/palestina_20170724_135100_1.jpg'  ,
                 
             ],
             'initialPreviewAsData'=>true,
             'overwriteInitial'=>false,
-            'previewFileType' => '*/*',
-            'initialCaption'=> $model->dokumen,
+            
             
         ]
     ]); ?>
