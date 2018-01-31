@@ -28,11 +28,8 @@ use kartik\file\FileInput;
     ]) ?>
 
     <?= $form->field($model, 'kinerja')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'permasalahan')->textarea(['maxlength' => true, 'row'=>'3']) ?>
-
     <?= $form->field($model, 'resume')->textarea(['maxlength' => true, 'row'=>'3']) ?>
-
     <?= $form->field($model, 'rekomendasi')->textarea(['maxlength' => true, 'row'=>'3']) ?>
     
     <?php if ($model->isNewRecord) : ?>
@@ -50,14 +47,10 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'filesup[]')->widget(FileInput::className(), [
         'options' => ['multiple' => true],
         'pluginOptions' => [
-            'initialPreview' => [
-            Yii::$app->getUrlManager()->getBaseUrl().'/docfiles/palestina_20170724_135100_1.jpg'  ,
-                
-            ],
+            'initialPreview' => $urlFiles,
             'initialPreviewAsData'=>true,
             'overwriteInitial'=>false,
-            
-            
+            'initialCaption' => $urlFiles,
         ]
     ]); ?>
     <?php endif ?>

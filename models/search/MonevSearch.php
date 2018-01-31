@@ -19,7 +19,7 @@ class MonevSearch extends Monev
     {
         return [
             [['id', 'id_indikator'], 'integer'],
-            [['tgl_keg', 'kinerja', 'pemasalahan', 'resume', 'rekomendasi'], 'safe'],
+            [['tgl_keg', 'kinerja', 'permasalahan', 'resume', 'rekomendasi'], 'safe'],
         ];
     }
 
@@ -65,7 +65,7 @@ class MonevSearch extends Monev
         ]);
 
         $query->andFilterWhere(['like', 'kinerja', $this->kinerja])
-            ->andFilterWhere(['like', 'pemasalahan', $this->pemasalahan])
+            ->andFilterWhere(['like', 'permasalahan', $this->permasalahan])
             ->andFilterWhere(['like', 'resume', $this->resume])
             ->andFilterWhere(['like', 'rekomendasi', $this->rekomendasi]);
 

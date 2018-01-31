@@ -70,6 +70,7 @@ class MonevController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $filesup = UploadedFile::getInstances($model, 'filesup');
             if ($filesup) {
+                $dokumen = '';
                 foreach ($filesup as $fileup) {
                     $filename = $fileup->name;
                     $path = Yii::getAlias('@app/docfiles/').$filename;
@@ -79,9 +80,10 @@ class MonevController extends Controller
                         $filename = $fileup->baseName.'_'.$count.'.'.$fileup->extension;
                         $path = Yii::getAlias('@app/docfiles/').$filename;                      
                     }
-                    $model->dokumen .= $filename.'//';
+                    $dokumen .= $filename.'//';
                     $fileup->saveAs($path);
                 }
+                $model->dokumen = substr($dokumen,0,strlen($dokumen)-2);
             }
             if ($model->save()) {
                 return $this->redirect(['realisasi-keg/view', 'id' => $model->id_indikator]);
@@ -103,12 +105,38 @@ class MonevController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if (isset($model->dokumen)) {
+            $dokumens = explode("//", $model->dokumen);
+            $urlfiles = [];
+            foreach ($dokumens as $key => $dokumen) {
+                $urlfiles[] = Yii::$app->getUrlManager()->getBaseUrl().'/docfiles/'.$dokumens[$key];
+            }
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $filesup = UploadedFile::getInstances($model, 'filesup');
+            if ($filesup) {
+                foreach ($filesup as $fileup) {
+                    $filename = $fileup->name;
+                    $path = Yii::getAlias('@app/docfiles/').$filename;
+                    $count = 0;
+                    while (file_exists($path)) {
+                        $count++;
+                        $filename = $fileup->baseName.'_'.$count.'.'.$fileup->extension;
+                        $path = Yii::getAlias('@app/docfiles/').$filename;                      
+                    }
+                    $dokumen .= $filename.'//';
+                    $fileup->saveAs($path);
+                }
+                $model->dokumen = substr($dokumen,0,strlen($dokumen)-2);
+            }
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }           
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'urlFiles' => $urlfiles,
             ]);
         }
     }

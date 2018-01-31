@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_indikator',
             'tgl_keg',
             'kinerja',
-            'pemasalahan',
+            'permasalahan',
             // 'resume',
             // 'rekomendasi',
 
