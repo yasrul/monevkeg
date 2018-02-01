@@ -40,7 +40,7 @@ class Monev extends \yii\db\ActiveRecord
             [['id_indikator'], 'integer'],
             [['tgl_keg','filesup'], 'safe'],
             [['kinerja', 'permasalahan', 'resume', 'rekomendasi', 'doc_sysfilename', 'doc_realfilename','dokumen'], 'string', 'max' => 500],
-            [['filesup'], 'file', 'extensions' => ['doc','docx','xls','xlsx','ppt','pptx','jpg','jpeg','pdf','zip','rar'],
+            [['filesup'], 'file', 'extensions' => ['doc','docx','xls','xlsx','ppt','pptx','jpg','jpeg','png','pdf','zip','rar'],
                 'maxSize' => 10*1024*1024,
                 'maxFiles' => 5,
                 'skipOnEmpty' => TRUE,

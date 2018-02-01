@@ -83,7 +83,7 @@ class MonevController extends Controller
                     $dokumen .= $filename.'//';
                     $fileup->saveAs($path);
                 }
-                $model->dokumen = substr($dokumen,0,strlen($dokumen)-2);
+                $model->dokumen = $dokumen;
             }
             if ($model->save()) {
                 return $this->redirect(['realisasi-keg/view', 'id' => $model->id_indikator]);
@@ -108,14 +108,15 @@ class MonevController extends Controller
         if (isset($model->dokumen)) {
             $dokumens = explode("//", $model->dokumen);
             $urlfiles = [];
-            foreach ($dokumens as $key => $dokumen) {
-                $urlfiles[] = Yii::$app->getUrlManager()->getBaseUrl().'/docfiles/'.$dokumens[$key];
+            for ($i=0; $i < count($dokumens)-1; $i++) {
+                $urlfiles[] = Yii::$app->getUrlManager()->getBaseUrl().'/docfiles/'.$dokumens[$i];
             }
         }
 
         if ($model->load(Yii::$app->request->post())) {
             $filesup = UploadedFile::getInstances($model, 'filesup');
             if ($filesup) {
+                $dokumen = $model->dokumen;
                 foreach ($filesup as $fileup) {
                     $filename = $fileup->name;
                     $path = Yii::getAlias('@app/docfiles/').$filename;
@@ -125,10 +126,10 @@ class MonevController extends Controller
                         $filename = $fileup->baseName.'_'.$count.'.'.$fileup->extension;
                         $path = Yii::getAlias('@app/docfiles/').$filename;                      
                     }
-                    $dokumen .= $filename.'//';
+                    $dokumen .= $filename."//";
                     $fileup->saveAs($path);
                 }
-                $model->dokumen = substr($dokumen,0,strlen($dokumen)-2);
+                $model->dokumen = $dokumen;
             }
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
