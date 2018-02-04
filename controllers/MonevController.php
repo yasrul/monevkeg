@@ -8,6 +8,7 @@ use app\models\search\MonevSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 
 /**
@@ -73,12 +74,12 @@ class MonevController extends Controller
                 $dokumen = '';
                 foreach ($filesup as $fileup) {
                     $filename = $fileup->name;
-                    $path = Yii::getAlias('@app/docfiles/').$filename;
+                    $path = Yii::$app->basePath.'/web/docfiles/'.$filename;
                     $count = 0;
                     while (file_exists($path)) {
                         $count++;
                         $filename = $fileup->baseName.'_'.$count.'.'.$fileup->extension;
-                        $path = Yii::getAlias('@app/docfiles/').$filename;                      
+                        $path = Yii::$app->basePath.'/web/docfiles/'.$filename;                      
                     }
                     $dokumen .= $filename.'//';
                     $fileup->saveAs($path);
@@ -105,11 +106,17 @@ class MonevController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $previewConfig = [];
+        
         if (isset($model->dokumen)) {
             $dokumens = explode("//", $model->dokumen);
             $urlfiles = [];
             for ($i=0; $i < count($dokumens)-1; $i++) {
-                $urlfiles[] = Yii::$app->getUrlManager()->getBaseUrl().'/docfiles/'.$dokumens[$i];
+                $urlfiles[] = Url::toRoute('/docfiles/'.$dokumens[$i]);
+                $previewConfig[] = [
+                    'caption'=>$dokumens[$i],
+                    'url' => Url::to(['monev/delete-file','id' => $model->id,'file'=>$dokumens[$i]]) ,
+                ];
             }
         }
 
@@ -117,17 +124,19 @@ class MonevController extends Controller
             $filesup = UploadedFile::getInstances($model, 'filesup');
             if ($filesup) {
                 $dokumen = $model->dokumen;
+                
                 foreach ($filesup as $fileup) {
                     $filename = $fileup->name;
-                    $path = Yii::getAlias('@app/docfiles/').$filename;
+                    $path = Yii::$app->basePath.'/web/docfiles/'.$filename;
                     $count = 0;
                     while (file_exists($path)) {
                         $count++;
                         $filename = $fileup->baseName.'_'.$count.'.'.$fileup->extension;
-                        $path = Yii::getAlias('@app/docfiles/').$filename;                      
+                        $path = Yii::$app->basePath.'/web/docfiles/'.$filename;                      
                     }
                     $dokumen .= $filename."//";
                     $fileup->saveAs($path);
+                    
                 }
                 $model->dokumen = $dokumen;
             }
@@ -138,6 +147,7 @@ class MonevController extends Controller
             return $this->render('update', [
                 'model' => $model,
                 'urlFiles' => $urlfiles,
+                'previewConfig' => $previewConfig,
             ]);
         }
     }
@@ -153,6 +163,32 @@ class MonevController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+    
+    public function actionDeleteFile($id, $file) {
+        
+        $model = $this->findModel($id);
+        $old_dokumens = explode("//", $model->dokumen);
+        
+        $pathfile = Yii::$app->basePath.'/web/docfiles/'.$file;
+        
+        if(empty($file) || !file_exists($pathfile)) {
+            return FALSE;
+        }
+        
+        if(!unlink($pathfile)) {
+            return FALSE;
+        }
+        $dokumens = '';
+        for ($i=0; $i < count($old_dokumens)-1; $i++) {
+            if ($old_dokumens[$i]!== $file) {
+                $dokumens .= $old_dokumens[$i].'//';
+            }
+        }
+        $model->dokumen = $dokumens;
+        if ($model->save()) {        
+            return TRUE;
+        }
     }
 
     /**

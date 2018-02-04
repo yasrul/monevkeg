@@ -47,10 +47,12 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'filesup[]')->widget(FileInput::className(), [
         'options' => ['multiple' => true],
         'pluginOptions' => [
+            'showUpload' => FALSE,
             'initialPreview' => $urlFiles,
             'initialPreviewAsData'=>true,
             'overwriteInitial'=>false,
-            'initialCaption' => $urlFiles,
+            'initialPreviewConfig' => $previewConfig,
+            'previewFileType' => 'any',
         ]
     ]); ?>
     <?php endif ?>
