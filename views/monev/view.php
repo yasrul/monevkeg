@@ -34,7 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'kinerja',
             'permasalahan',
             'resume',
-            'rekomendasi',
+            [
+                'attribute' => 'rekomendasi',
+                'format' => 'html',
+            ]
         ],
     ]) ?>
 
