@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use kartik\file\FileInput;
-use vova07\imperavi\Widget;
+use vova07\imperavi\Widget as Redactor;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Monev */
@@ -30,8 +30,27 @@ use vova07\imperavi\Widget;
 
     <?= $form->field($model, 'kinerja')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'permasalahan')->textarea(['maxlength' => true, 'row'=>'3']) ?>
-    <?= $form->field($model, 'resume')->textarea(['maxlength' => true, 'row'=>'3']) ?>
-    <?= $form->field($model, 'rekomendasi')->textarea(['maxlength' => true, 'row'=>'3']) ?>
+    <?= $form->field($model, 'resume')->widget(Redactor::className(),[
+        'settings' => [
+            'lang' => 'en',
+            'minHeight' => 200,
+            'plugins' => [
+                'clips',
+                'fullscreen',
+            ]
+        ]
+    ]) ?>
+    
+    <?= $form->field($model, 'rekomendasi')->widget(Redactor::className(),[
+        'settings' => [
+            'lang' => 'en',
+            'minHeight' => 200,
+            'plugins' => [
+                'clips',
+                'fullscreen',
+            ]
+        ]
+    ]) ?>
     
     <?php if ($model->isNewRecord) : ?>
     <?= $form->field($model, 'filesup[]')->widget(FileInput::className(), [

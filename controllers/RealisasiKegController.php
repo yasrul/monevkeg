@@ -37,8 +37,7 @@ class RealisasiKegController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
-        
+    {    
         $searchModel = new RealisasiKegSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

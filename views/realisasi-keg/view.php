@@ -74,8 +74,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute'=>'tgl_keg', 'contentOptions'=>['style'=>'width:10%']],
             'kinerja',
             'permasalahan',
-            'resume',
-            'rekomendasi',
+            ['attribute' => 'resume', 'format' => 'html'],
+            ['attribute' => 'rekomendasi', 'format' => 'html'],
             
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
