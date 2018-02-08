@@ -11,5 +11,7 @@ use yii\base\Model;
  * @author yasrul
  */
 class LaporanForm extends Model {
-    //put your code here
+    
+    public $tahun;
+    public $bidang;
 }
