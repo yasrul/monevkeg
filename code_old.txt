@@ -42,3 +42,10 @@ public function actionCreate($idIndikator)
             ]);
         }
     }
+
+SELECT concat(i.Kd_Urusan,'.',i.Kd_Bidang,'.',i.Kd_Unit,'.',i.Kd_Sub,'.',i.Kd_Prog,'.',i.Kd_Keg) as 'Kode Prog/Keg', p.Ket_Program, k.Ket_Kegiatan, i.Tolak_Ukur, concat(cast(format(i.Target_Angka,0) as CHARACTER),' ',i.Target_Uraian) as 'Target', r.keuangan, r.fisik, m.kinerja, m.permasalahan, m.resume, m.rekomendasi 
+FROM indikator i 
+LEFT JOIN program p ON i.Kd_Prog = p.Kd_Prog AND i.ID_Prog = p.ID_Prog 
+LEFT JOIN kegiatan k ON i.Kd_Prog = k.Kd_Prog AND i.ID_Prog = k.Id_Prog AND i.Kd_Keg = k.Kd_Keg 
+LEFT JOIN (SELECT id_indikator, MAX(fisik) AS fisik, MAX(keuangan) AS keuangan FROM realisasi GROUP BY id_indikator) r ON i.id = r.id_indikator
+LEFT JOIN monev m ON i.id = m.id_indikator
