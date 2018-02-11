@@ -92,7 +92,11 @@ class SiteController extends Controller
                 ['name' => 'Uang', 'data' => $uang]
         ];
         
-        return $this->render('index', ['dataProvider' => $dataProvider, 'categories'=>$categories ,'series' => $series]);
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'categories'=>$categories,
+            'series' => $series
+        ]);
     }
 
     /**

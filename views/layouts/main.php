@@ -39,6 +39,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Monev Kegiatan', 'url' => ['/realisasi-keg/index']],
+            ['label' => 'Lapor Monev', 'url' => ['report/lap-monev']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
