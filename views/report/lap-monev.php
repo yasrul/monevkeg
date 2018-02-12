@@ -37,12 +37,19 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'beforeHeader' => [
+            'columns' => [
+                [
+                    'content'=>'Kolom Satu',
+                ]
+            ]
+        ],
         'columns' => [
             ['class' =>'kartik\grid\SerialColumn'],
             [
                 'label' => 'Kode',
                 //'group' => TRUE,
-                'value' => function ($data, $key, $index, $colums) {
+                'value' => function ($data) {
                     return $data['Kd_Urusan'].'.'.$data['Kd_Bidang'].'.'.$data['Kd_Unit'].'.'.$data['Kd_Sub'].
                             '.'.$data['Kd_Prog'].'.'.$data['Kd_Keg'];
                 }
@@ -52,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'Program',
                 'group'=>TRUE,
                 'groupedRow'=>TRUE,
-                'value'=> function ($data, $key, $index, $colums) {
+                'value'=> function ($data) {
                     return $data['Kd_Urusan'].'.'.$data['Kd_Bidang'].'.'.$data['Kd_Unit'].'.'.$data['Kd_Sub'].
                             '.'.$data['Kd_Prog'].' '.$data['Ket_Program'];
                 }
