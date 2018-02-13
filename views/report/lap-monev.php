@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 use app\models\Program;
 
@@ -13,6 +14,53 @@ use app\models\Program;
 
 $this->title = 'Laporan Monev Kegiatan';
 $this->params['breadcrumbs'][] = $this->title;
+
+$gridColumns = [
+    ['class' =>'kartik\grid\SerialColumn'],
+    [
+        'label' => 'Kode',
+        //'group' => TRUE,
+        'value' => function ($data) {
+            return $data['Kd_Urusan'].'.'.$data['Kd_Bidang'].'.'.$data['Kd_Unit'].'.'.$data['Kd_Sub'].
+                '.'.$data['Kd_Prog'].'.'.$data['Kd_Keg'];
+        }
+    ],    
+    [
+        'attribute'=>'Ket_Program',
+        'label'=>'Program',
+        'group'=>TRUE,
+        'groupedRow'=>TRUE,
+        'value'=> function ($data) {
+            return $data['Kd_Urusan'].'.'.$data['Kd_Bidang'].'.'.$data['Kd_Unit'].'.'.$data['Kd_Sub'].
+                '.'.$data['Kd_Prog'].' '.$data['Ket_Program'];
+        }
+    ],
+    [
+        'attribute'=>'Ket_Kegiatan',
+        'label'=>'Kegiatan',
+        //'group'=>TRUE
+    ],
+    ['attribute'=>'Tolak_Ukur', 'label'=>'Indikator'],
+    'Target',
+    ['attribute'=>'keuangan', 'label'=>'Keu'] ,
+    'fisik',
+    'kinerja',
+    ['attribute'=>'permasalahan', 'format'=>'raw','label'=>'Permasalahan'],
+    ['attribute'=>'resume', 'format'=>'raw'],
+    ['attribute' => 'rekomendasi', 'format' => 'raw']
+];
+
+$fullExportMenu = ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+            'target' => ExportMenu::TARGET_BLANK,
+            //'fontAwesome' => true,
+            'dropdownOptions' => [
+                'label' => 'Export All',
+                'class' => 'btn btn-default'
+            ],
+            'emptyText' => 'Tidak Ada Data yang Ditampilkan'
+        ]);
 
 ?>
 <h1>LAPORAN MONEV KEGIATAN</h1>
@@ -32,12 +80,19 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <div class="form-group">
         <?= Html::submitButton('Tampilkan', ['class' => 'btn btn-primary']) ?>
+        
     </div>
     
     <?php ActiveForm::end(); ?>
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'autoXlFormat'=>true,
+        'export'=>[
+            'fontAwesome'=>true,
+            'showConfirmAlert'=>false,
+            'target'=>GridView::TARGET_BLANK
+        ],
         'beforeHeader' => [
             [
                 'columns' => [
@@ -47,45 +102,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]
         ],
-        'columns' => [
-            ['class' =>'kartik\grid\SerialColumn'],
-            [
-                'label' => 'Kode',
-                //'group' => TRUE,
-                'value' => function ($data) {
-                    return $data['Kd_Urusan'].'.'.$data['Kd_Bidang'].'.'.$data['Kd_Unit'].'.'.$data['Kd_Sub'].
-                            '.'.$data['Kd_Prog'].'.'.$data['Kd_Keg'];
-                }
-            ],    
-            [
-                'attribute'=>'Ket_Program',
-                'label'=>'Program',
-                'group'=>TRUE,
-                'groupedRow'=>TRUE,
-                'value'=> function ($data) {
-                    return $data['Kd_Urusan'].'.'.$data['Kd_Bidang'].'.'.$data['Kd_Unit'].'.'.$data['Kd_Sub'].
-                            '.'.$data['Kd_Prog'].' '.$data['Ket_Program'];
-                }
-            ],
-            [
-                'attribute'=>'Ket_Kegiatan',
-                'label'=>'Kegiatan',
-                //'group'=>TRUE
-            ],
-            ['attribute'=>'Tolak_Ukur', 'label'=>'Indikator'],
-            'Target',
-            ['attribute'=>'keuangan', 'label'=>'Keu'] ,
-            'fisik',
-            'kinerja',
-            ['attribute'=>'permasalahan', 'format'=>'raw','label'=>'Permasalahan'],
-            ['attribute'=>'resume', 'format'=>'raw'],
-            ['attribute' => 'rekomendasi', 'format' => 'raw']
-            
-        ]
+        'columns' => $gridColumns,
+        
     ]); ?>
     
     <?= Html::a('Export Excel', ['export-excel', 'model' => $model], ['class'=>'btn btn-info']); ?>&nbsp;
-    <?= Html::a('Export PDF', ['report/export-pdf', 'params' => $model], ['class'=>'btn btn-info']); ?>  
+    <?= Html::a('Export PDF', ['export-pdf', 'params' => $model], ['class'=>'btn btn-info']); ?>  
     
 </div>
 
