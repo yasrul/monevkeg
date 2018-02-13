@@ -8,6 +8,7 @@ use app\models\Program;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider app\controllers\ReportController */
+/* @var $model app\controllers\ReportController */
 
 
 $this->title = 'Laporan Monev Kegiatan';
@@ -30,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
     
     <div class="form-group">
-        <?= Html::submitButton('Filter', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Tampilkan', ['class' => 'btn btn-primary']) ?>
     </div>
     
     <?php ActiveForm::end(); ?>
@@ -38,9 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'beforeHeader' => [
-            'columns' => [
-                [
-                    'content'=>'Kolom Satu',
+            [
+                'columns' => [
+                    ['content' => 'KEGIATAN', 'options' => ['colspan'=>5, 'class'=>'text-center warning']],
+                    ['content' => 'REALISASI', 'options' => ['colspan'=>3, 'class'=>'text-center warning']],
+                    ['content' => 'EVALUASI', 'options' => ['colspan'=>3, 'class'=>'text-center warning']],
                 ]
             ]
         ],
@@ -80,6 +83,9 @@ $this->params['breadcrumbs'][] = $this->title;
             
         ]
     ]); ?>
+    
+    <?= Html::a('Export Excel', ['export-excel', 'model' => $model], ['class'=>'btn btn-info']); ?>&nbsp;
+    <?= Html::a('Export PDF', ['report/export-pdf', 'params' => $model], ['class'=>'btn btn-info']); ?>  
     
 </div>
 
