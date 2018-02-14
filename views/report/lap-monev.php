@@ -3,14 +3,11 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\grid\GridView;
-use kartik\export\ExportMenu;
 
 use app\models\Program;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider app\controllers\ReportController */
-/* @var $model app\controllers\ReportController */
-
 
 $this->title = 'Laporan Monev Kegiatan';
 $this->params['breadcrumbs'][] = $this->title;
@@ -50,18 +47,6 @@ $gridColumns = [
     ['attribute' => 'rekomendasi', 'format' => 'raw']
 ];
 
-$fullExportMenu = ExportMenu::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => $gridColumns,
-            'target' => ExportMenu::TARGET_BLANK,
-            //'fontAwesome' => true,
-            'dropdownOptions' => [
-                'label' => 'Export All',
-                'class' => 'btn btn-default'
-            ],
-            'emptyText' => 'Tidak Ada Data yang Ditampilkan'
-        ]);
-
 ?>
 <h1>LAPORAN MONEV KEGIATAN</h1>
 <div class="form">
@@ -79,8 +64,9 @@ $fullExportMenu = ExportMenu::widget([
     ]); ?>
     
     <div class="form-group">
-        <?= Html::submitButton('Tampilkan', ['class' => 'btn btn-primary']) ?>
-        
+        <?= Html::submitButton('Tampilkan', ['class' => 'btn btn-primary']) ?>&nbsp;&nbsp;
+        <?= Html::a('Export Excel', ['export-excel', 'model' => $model], ['class'=>'btn btn-info']); ?>&nbsp;
+        <?= Html::a('Export PDF', ['export-pdf', 'params' => $model], ['class'=>'btn btn-info']); ?> 
     </div>
     
     <?php ActiveForm::end(); ?>
@@ -106,8 +92,6 @@ $fullExportMenu = ExportMenu::widget([
         
     ]); ?>
     
-    <?= Html::a('Export Excel', ['export-excel', 'model' => $model], ['class'=>'btn btn-info']); ?>&nbsp;
-    <?= Html::a('Export PDF', ['export-pdf', 'params' => $model], ['class'=>'btn btn-info']); ?>  
     
 </div>
 

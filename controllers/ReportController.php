@@ -10,6 +10,8 @@ use yii\base\DynamicModel;
 use yii\db\Query;
 use yii\data\ArrayDataProvider;
 
+use app\models\ReportForm;
+
 /**
  * Description of ReportController
  *
@@ -47,12 +49,8 @@ class ReportController extends Controller {
     }
     
     public function actionLapMonev() {
-        $model = new DynamicModel(['tahun','kd_prog']);
         
-        $model->addRule(['tahun'], 'required');
-        $model->addRule(['tahun','kd_prog'], 'integer');       
-        $model->attributes(['tahun' => 'Tahun', 'kd_prog' => 'Program']);
-        
+        $model = new ReportForm();
         $model->load(Yii::$app->request->queryParams);
         
         $allModel = $this->getMonevKeg ($model);
@@ -64,7 +62,7 @@ class ReportController extends Controller {
         return $this->render('lap-monev',['model' => $model,'dataProvider' => $dataProvider]);
     }
     
-    public function actionExportPdf($params = null) {
+    public function actionExportPdf(array $params) {
         
         $allModel = $this->getMonevKeg($params);
         
@@ -76,6 +74,7 @@ class ReportController extends Controller {
         ]);
         
         $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
+        $objRichText = new \PHPExcel_Helper_HTML();
         //set template
         $template = Yii::getAlias('@app/views/report').'/_monevkeg.xlsx';
         $objPHPExcel = $objReader->load($template);
@@ -86,13 +85,18 @@ class ReportController extends Controller {
                 ->setPaperSize(\PHPExcel_Worksheet_PageSetup::PAPERSIZE_FOLIO);
         
         $baseRow=3;
-        foreach ($dataProvider->getModels() as $absen) {
+        foreach ($dataProvider->getModels() as $monev) {
             $activeSheet->setCellValue('A'.$baseRow, $baseRow-2)
-                    ->setCellValue('B'.$baseRow, (int)$absen['badgenumber'])
-                    ->setCellValue('C'.$baseRow, $absen['name'])
-                    ->setCellValue('D'.$baseRow, $absen['datang'])
-                    ->setCellValue('E'.$baseRow, $absen['pulang'])
-                    ->setCellValue('F'.$baseRow, $absen['keterangan']);
+                    ->setCellValue('B'.$baseRow, $monev['Kd_Urusan'].'.'.$monev['Kd_Bidang'].'.'.$monev['Kd_Unit'].'.'.$monev['Kd_Sub'])
+                    ->setCellValue('C'.$baseRow, $monev['Ket_Kegiatan'])
+                    ->setCellValue('D'.$baseRow, $monev['Tolak_Ukur'])
+                    ->setCellValue('E'.$baseRow, $monev['Target'])
+                    ->setCellValue('F'.$baseRow, $monev['keuangan'])
+                    ->setCellValue('G'.$baseRow, $monev['fisik'])
+                    ->setCellValue('H'.$baseRow, $monev['kinerja'])
+                    ->setCellValue('I'.$baseRow, $monev['permasalahan'])
+                    ->setCellValue('J'.$baseRow, $monev['resume'])
+                    ->setCellValue('K'.$baseRow, $objRichText->toRichTextObject($monev['rekomendasi']));
             $baseRow++;
         }
         
@@ -106,7 +110,7 @@ class ReportController extends Controller {
         return TRUE;
     }
     
-    public function getMonevKeg ($params) {
+    public function getMonevKeg ($params = []) {
         $allModel = (new Query())->select(['i.Kd_Urusan','i.Kd_Bidang','i.Kd_Unit','i.Kd_Sub','i.Kd_Prog','i.Kd_Keg',
             'p.Ket_Program','k.Ket_Kegiatan','i.Tolak_Ukur','CONCAT(CAST(FORMAT(i.Target_Angka,0) as CHARACTER)," ",i.Target_Uraian) as Target',
             'r.keuangan', 'r.fisik', 'm.kinerja', 'm.permasalahan', 'm.resume', 'm.rekomendasi'])
