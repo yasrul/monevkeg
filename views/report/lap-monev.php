@@ -8,6 +8,7 @@ use app\models\Program;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider app\controllers\ReportController */
+/* @var $model app\models\ReportForm */
 
 $this->title = 'Laporan Monev Kegiatan';
 $this->params['breadcrumbs'][] = $this->title;
@@ -65,8 +66,8 @@ $gridColumns = [
     
     <div class="form-group">
         <?= Html::submitButton('Tampilkan', ['class' => 'btn btn-primary']) ?>&nbsp;&nbsp;
-        <?= Html::a('Export Excel', ['export-excel', 'model' => $model], ['class'=>'btn btn-info']); ?>&nbsp;
-        <?= Html::a('Export PDF', ['export-pdf', 'params' => $model], ['class'=>'btn btn-info']); ?> 
+        <?= Html::a('Export Excel', ['export-excel', 'params' => $model], ['class'=>'btn btn-info']); ?>&nbsp;
+       
     </div>
     
     <?php ActiveForm::end(); ?>

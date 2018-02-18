@@ -26,10 +26,10 @@ class ReportController extends Controller {
         return [
             'access' => [
                 'class'=> AccessControl::className(),
-                'only'=>['lap-monev','export-pdf'],
+                'only'=>['lap-monev','export-excel'],
                 'rules'=>[
                     [
-                        'actions'=>['lap-monev','export-pdf',],
+                        'actions'=>['lap-monev','export-excel',],
                         'allow'=>TRUE,
                         'roles'=>['@'],
                     ]
@@ -62,7 +62,7 @@ class ReportController extends Controller {
         return $this->render('lap-monev',['model' => $model,'dataProvider' => $dataProvider]);
     }
     
-    public function actionExportPdf(array $params) {
+    public function actionExportExcel(array $params) {
         
         $allModel = $this->getMonevKeg($params);
         
