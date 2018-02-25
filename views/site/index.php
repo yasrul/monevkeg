@@ -43,7 +43,7 @@ $this->title = 'Sistem Informasi Monitoring Kegiatan';
                 'columns' => [
                     ['class'=>'yii\grid\SerialColumn','contentOptions'=>['style'=>'width :7%']],
                     
-                    'Program',
+                    'Unit_Kerja',
                     'rerata_fisik',
                     'rerata_uang',
                 ]

@@ -65,25 +65,25 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $realProgs = (new Query())->select('p.Ket_Program AS Program, SUM(r.fisik)/COUNT(i.Kd_Prog) AS rerata_fisik, SUM(r.keuangan)/COUNT(i.Kd_Prog) rerata_uang')
+        $realBidangs = (new Query())->select('u.unit_kerja AS Unit_Kerja, SUM(r.fisik)/COUNT(i.Kd_Prog) AS rerata_fisik, SUM(r.keuangan)/COUNT(i.Kd_Prog) rerata_uang')
                 ->from('indikator i')
                 ->leftJoin('(SELECT id_indikator, MAX(fisik) AS fisik, MAX(keuangan) AS keuangan FROM realisasi GROUP BY id_indikator) r ON i.id = r.id_indikator')
-                ->leftJoin('program p ON (i.Kd_Prog = p.Kd_Prog)')
-                ->groupBy('i.Kd_Prog')->orderBy('i.Kd_Prog')
+                ->leftJoin('(SELECT pu.Kd_Urusan, pu.Kd_Bidang, pu.Kd_Unit, pu.Kd_Sub, pu.Kd_Prog, pu.Kd_Keg, uk.unit_kerja FROM program_unit pu LEFT JOIN unit_kerja uk ON uk.id = pu.ID_UnitKerja) u ON (u.Kd_Urusan = i.Kd_Urusan AND u.Kd_Bidang = i.Kd_Bidang AND u.Kd_Unit = i.Kd_Unit AND u.Kd_Prog = i.Kd_Prog AND u.Kd_Keg = i.Kd_Keg)')
+                ->groupBy('u.unit_kerja')->orderBy('u.unit_kerja')
                 ->all();
         
         $dataProvider = new ArrayDataProvider([
-            'allModels' => $realProgs,
+            'allModels' => $realBidangs,
         ]);
         
         $series = [];
         $categories = [];
         $fisik = [];
         $uang = [];
-        foreach ($realProgs as $realProg) {
-            $categories[] = $realProg['Program'];
-            $fisik[] = round($realProg['rerata_fisik'], 2);
-            $uang[] = round($realProg['rerata_uang'],2);
+        foreach ($realBidangs as $realBidang) {
+            $categories[] = $realBidang['Unit_Kerja'];
+            $fisik[] = round($realBidang['rerata_fisik'], 2);
+            $uang[] = round($realBidang['rerata_uang'],2);
             
         }
         
