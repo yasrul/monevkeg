@@ -12,6 +12,7 @@ use yii\db\Query;
 
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\SignupForm;
 use app\models\RealisasiKeg;
 
 class SiteController extends Controller
@@ -24,13 +25,18 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['index','logout','signup'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['index','signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ]
                 ],
             ],
             'verbs' => [
@@ -157,5 +163,20 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+    
+    public function actionSignup() {
+        $model = new SignupForm();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            //var_dump($model);
+            //return "test";
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+        return $this->render('signup', ['model'=>$model]);
     }
 }

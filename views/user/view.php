@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Monev */
+/* @var $model app\models\User */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Monev', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="monev-view">
+<div class="user-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,15 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_indikator',
-            'tgl_keg',
-            'kinerja',
-            'permasalahan',
-            'resume',
-            [
-                'attribute' => 'rekomendasi',
-                'format' => 'html',
-            ]
+            'username',
+            //'auth_key',
+            //'password_hash',
+            //'password_reset_token',
+            'email:email',
+            'unitKerja.unit_kerja',
+            'role.role_name',
+            'status.status_name',
+            'created_at',
+            'updated_at',
         ],
     ]) ?>
 

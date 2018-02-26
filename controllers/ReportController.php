@@ -6,12 +6,11 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\base\DynamicModel;
 use yii\db\Query;
 use yii\data\ArrayDataProvider;
 
 use app\models\ReportForm;
-
+use app\models\PermissionHelpers;
 /**
  * Description of ReportController
  *
@@ -32,6 +31,10 @@ class ReportController extends Controller {
                         'actions'=>['lap-monev','export-excel',],
                         'allow'=>TRUE,
                         'roles'=>['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return PermissionHelpers::requireMinimumRole('Operator') &&
+                            PermissionHelpers::requireStatus('Active');
+                        }
                     ]
                     
                 ],

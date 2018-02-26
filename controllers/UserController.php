@@ -3,19 +3,18 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\User;
+use app\models\search\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-
 use app\models\PermissionHelpers;
-use app\models\RealisasiKeg;
-use app\models\search\RealisasiKegSearch;
 
 /**
- * RealisasiKegController implements the CRUD actions for RealisasiKeg model.
+ * UserController implements the CRUD actions for User model.
  */
-class RealisasiKegController extends Controller
+class UserController extends Controller
 {
     /**
      * @inheritdoc
@@ -25,22 +24,19 @@ class RealisasiKegController extends Controller
         return [
             'access' => [
                 'class'=> AccessControl::className(),
-                'only'=>['index','view'],
+                'only'=>['index','update','create','view','delete'],
                 'rules'=>[
                     [
-                        'actions'=>['index','view',],
+                        'actions'=>['index','create','update','view','delete'],
                         'allow'=>TRUE,
                         'roles'=>['@'],
                         'matchCallback' => function ($rule, $action) {
-                            return PermissionHelpers::requireMinimumRole('Operator') &&
+                            return PermissionHelpers::requireMinimumRole('AdminSystem') &&
                             PermissionHelpers::requireStatus('Active');
                         }
                     ]
                     
-                ],
-                'denyCallback'=> function ($rule, $action) {
-                    throw new \yii\web\ForbiddenHttpException('Anda tidak diizinkan untuk mengakses halaman '.$action->id.' ini');
-                }
+                ]
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -52,12 +48,12 @@ class RealisasiKegController extends Controller
     }
 
     /**
-     * Lists all RealisasiKeg models.
+     * Lists all User models.
      * @return mixed
      */
     public function actionIndex()
-    {    
-        $searchModel = new RealisasiKegSearch();
+    {
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -67,7 +63,7 @@ class RealisasiKegController extends Controller
     }
 
     /**
-     * Displays a single RealisasiKeg model.
+     * Displays a single User model.
      * @param integer $id
      * @return mixed
      */
@@ -79,13 +75,13 @@ class RealisasiKegController extends Controller
     }
 
     /**
-     * Creates a new RealisasiKeg model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new RealisasiKeg();
+        $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -97,7 +93,7 @@ class RealisasiKegController extends Controller
     }
 
     /**
-     * Updates an existing RealisasiKeg model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -116,7 +112,7 @@ class RealisasiKegController extends Controller
     }
 
     /**
-     * Deletes an existing RealisasiKeg model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -129,15 +125,15 @@ class RealisasiKegController extends Controller
     }
 
     /**
-     * Finds the RealisasiKeg model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return RealisasiKeg the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = RealisasiKeg::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

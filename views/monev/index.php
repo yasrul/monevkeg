@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\search\MonevSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Monevs';
+$this->title = 'Monev';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="monev-index">

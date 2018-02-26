@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Monev */
+/* @var $model app\models\Status */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Monev', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Status', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="monev-view">
+<div class="status-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,15 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_indikator',
-            'tgl_keg',
-            'kinerja',
-            'permasalahan',
-            'resume',
-            [
-                'attribute' => 'rekomendasi',
-                'format' => 'html',
-            ]
+            'status_name',
+            'status_value',
         ],
     ]) ?>
 

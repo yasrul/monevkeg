@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Realisasi */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Realisasis', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Realisasi', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="realisasi-view">

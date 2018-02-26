@@ -3,13 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Monev;
-use app\models\search\MonevSearch;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
+
+use app\models\PermissionHelpers;
+use app\models\Monev;
+use app\models\search\MonevSearch;
 
 /**
  * MonevController implements the CRUD actions for Monev model.
@@ -22,6 +26,25 @@ class MonevController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class'=> AccessControl::className(),
+                'only'=>['index','view','update','delete','create'],
+                'rules'=>[
+                    [
+                        'actions'=>['index','view','update','delete','create'],
+                        'allow'=>TRUE,
+                        'roles'=>['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return PermissionHelpers::requireMinimumRole('Operator') &&
+                            PermissionHelpers::requireStatus('Active');
+                        }
+                    ]
+                    
+                ],
+                'denyCallback'=> function ($rule, $action) {
+                    throw new \yii\web\ForbiddenHttpException('Anda tidak diizinkan untuk mengakses halaman '.$action->id.' ini');
+                }
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
