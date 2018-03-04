@@ -105,13 +105,29 @@ a.desc:after {
     }
 }
 
-.navbar {
-    color: #0000FF;
+.navbar-default {
     background-color: #1E90FF;
+    border-color: #1E90FF;
 }
 
-.nav {
-    color: #0000FF;
+.navbar-default .navbar-brand {
+        color: #FFFFFF;
+        &:hover, &:focus {
+            color: #0000A0; }
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: #0000A0;  /*Sets the text hover color on navbar*/
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >   
+ a:hover, .navbar-default .navbar-nav > .active > a:focus {
+color: white; /*BACKGROUND color for active*/
+background-color: #0000A0;
+}
+
+.navbar-default .navbar-nav > li > a {
+   color: white; /*Change active text color here*/
 }
 
 .nav > li > form > button.logout:focus,

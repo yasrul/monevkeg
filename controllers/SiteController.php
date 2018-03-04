@@ -71,7 +71,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $realBidangs = (new Query())->select('u.unit_kerja AS Unit_Kerja, SUM(r.fisik)/COUNT(i.Kd_Prog) AS rerata_fisik, SUM(r.keuangan)/COUNT(i.Kd_Prog) rerata_uang')
+        $realBidangs = (new Query())->select('u.unit_kerja AS Unit_Kerja, SUM(r.fisik)/COUNT(i.Kd_Keg) AS rerata_fisik, SUM(r.keuangan)/COUNT(i.Kd_Prog) rerata_uang')
                 ->from('indikator i')
                 ->leftJoin('(SELECT id_indikator, MAX(fisik) AS fisik, MAX(keuangan) AS keuangan FROM realisasi GROUP BY id_indikator) r ON i.id = r.id_indikator')
                 ->leftJoin('(SELECT pu.Kd_Urusan, pu.Kd_Bidang, pu.Kd_Unit, pu.Kd_Sub, pu.Kd_Prog, pu.Kd_Keg, uk.unit_kerja FROM program_unit pu LEFT JOIN unit_kerja uk ON uk.id = pu.ID_UnitKerja) u ON (u.Kd_Urusan = i.Kd_Urusan AND u.Kd_Bidang = i.Kd_Bidang AND u.Kd_Unit = i.Kd_Unit AND u.Kd_Prog = i.Kd_Prog AND u.Kd_Keg = i.Kd_Keg)')
