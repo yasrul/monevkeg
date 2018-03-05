@@ -46,7 +46,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                //'label' => 'Kode',
+                //'group' => TRUE,
+                'attribute' => 'kode',
+                'value' => function ($data) {
+                    return $data['Kd_Urusan'].'.'.$data['Kd_Bidang'].'.'.$data['Kd_Unit'].'.'.$data['Kd_Sub'].
+                    '.'.$data['Kd_Prog'].'.'.$data['Kd_Keg'];
+                },
+                'contentOptions' => ['style' => 'width: 10%']
+            ],  
             //'id',
             //'Tahun',
             //['attribute' => 'program', 'value' => 'program.Ket_Program'],
@@ -54,10 +63,19 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'Kd_Indikator',
             // 'No_ID',
             'Tolak_Ukur',
-            'Target_Angka',
-            'Target_Uraian',
+            ['attribute' => 'Target_Angka', 'contentOptions' => ['style' => 'width: 10%']],
+            ['attribute' => 'Target_Uraian', 'contentOptions' => ['style' => 'width: 10%']],
 
-            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}', 'buttons' => [
+                //view button
+                'view' => function ($url, $model) {
+                    return Html::a('View', $url, [
+                            'title' => 'View',
+                            'class'=>'btn btn-primary btn-xs',                                  
+                    ]);
+                },],
+            ],
+            
         ],
     ]); ?>
 </div>

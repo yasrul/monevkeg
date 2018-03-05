@@ -116,6 +116,7 @@ a.desc:after {
             color: #0000A0; }
 }
 
+
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
 color: #0000A0;  /*Sets the text hover color on navbar*/
 }

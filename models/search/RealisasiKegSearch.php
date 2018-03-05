@@ -14,6 +14,7 @@ class RealisasiKegSearch extends RealisasiKeg
 {
     public $program;
     public $kegiatan;
+    public $kode;
     //public $KdID_Prog;
     
     /**
@@ -23,7 +24,7 @@ class RealisasiKegSearch extends RealisasiKeg
     {
         return [
             [['id', 'Tahun', 'Kd_Urusan', 'Kd_Bidang', 'Kd_Unit', 'Kd_Sub', 'Kd_Prog', 'ID_Prog', 'Kd_Keg', 'Kd_Indikator', 'No_ID'], 'integer'],
-            [['Tolak_Ukur', 'Target_Uraian', 'program', 'kegiatan','KdID_Prog'], 'safe'],
+            [['Tolak_Ukur', 'Target_Uraian', 'kode','program', 'kegiatan','KdID_Prog'], 'safe'],
             [['Target_Angka'], 'number'],
         ];
     }
@@ -80,6 +81,7 @@ class RealisasiKegSearch extends RealisasiKeg
 
         $query->andFilterWhere(['like', 'indikator.Tolak_Ukur', $this->Tolak_Ukur])
             ->andFilterWhere(['like', 'indikator.Target_Uraian', $this->Target_Uraian])
+            ->andFilterWhere(['like', 'CONCAT(indikator.Kd_Urusan,".",indikator.Kd_Bidang,".",indikator.Kd_Unit,".",indikator.Kd_Sub,".",indikator.Kd_Prog,".",indikator.Kd_Keg)', $this->kode])
             ->andFilterWhere(['like', 'program.Ket_Program', $this->program])
             ->andFilterWhere(['like', 'kegiatan.Ket_Kegiatan', $this->kegiatan]);
         
