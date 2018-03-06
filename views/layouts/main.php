@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => '<img src="logo_ntb_60.png" style="display:inline; vertical-align: top; height:55px; margin-top: -10px"/>  BAPPEDA Pemerintah Provinsi NTB',
+        'brandLabel' => 'BAPPEDA Pemerintah Provinsi NTB',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',
