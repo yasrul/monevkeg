@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'BAPPEDA Pemerintah Provinsi NTB',
+        'brandLabel' => Html::img('@web/logo_ntb_60.png', ['style' => 'display: inline; vertical-align: top; height: 55px; margin-top: -10px']).' BAPPEDA Pemerintah Provinsi NTB',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',
@@ -48,7 +48,7 @@ AppAsset::register($this);
             ['label'=>'Laporan','url'=>['report/lap-monev']],
         ]];
         
-        $is_admin = PermissionHelpers::requireMinimumRole('AdminSystem');
+        $is_admin = PermissionHelpers::requireMinimumRole('admin_system');
         if($is_admin) {
             $menuItems[] = ['label'=>'Admin', 'items'=> [
                 ['label'=>'User','url'=>['user/index']],

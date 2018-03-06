@@ -32,7 +32,7 @@ class ReportController extends Controller {
                         'allow'=>TRUE,
                         'roles'=>['@'],
                         'matchCallback' => function ($rule, $action) {
-                            return PermissionHelpers::requireMinimumRole('Operator') &&
+                            return PermissionHelpers::requireMinimumRole('operator') &&
                             PermissionHelpers::requireStatus('Active');
                         }
                     ]

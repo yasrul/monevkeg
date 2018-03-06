@@ -33,7 +33,7 @@ class StatusController extends Controller
                         'allow'=>TRUE,
                         'roles'=>['@'],
                         'matchCallback' => function ($rule, $action) {
-                            return PermissionHelpers::requireMinimumRole('AdminSystem') &&
+                            return PermissionHelpers::requireMinimumRole('admin_system') &&
                             PermissionHelpers::requireStatus('Active');
                         }
                     ]                   
